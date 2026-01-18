@@ -1,0 +1,211 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 0 10px;
+}
+body::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("images/night.jpg"), #000;
+  background-position: center;
+  background-size: cover;
+}
+.fest-logo {
+  width: 90px;              /* adjust size if needed */
+  margin: 0 auto 15px;
+  display: block;
+  filter: drop-shadow(0 0 10px rgb(255, 242, 0));
+}
+
+
+
+/* Selected glow animation */
+.event-btn.selected {
+  background: rgba(255, 8, 0, 0.45);
+  border: 1px solid #ffa600;
+  box-shadow:
+    0 0 10px rgba(255, 102, 0, 0.6),
+    0 0 20px rgba(255, 94, 0, 0.5),
+    0 0 35px rgba(255, 60, 0, 0.4);
+  animation: glowPulse 1.2s infinite alternate;
+}
+
+/* Glow pulse animation */
+@keyframes glowPulse {
+  from {
+    box-shadow:
+      0 0 8px rgba(255, 68, 0, 0.4),
+      0 0 16px rgba(255, 55, 0, 0.368);
+  }
+  to {
+    box-shadow:
+      0 0 18px rgba(255, 38, 0, 0.8),
+      0 0 36px rgba(255, 60, 0, 0.6);
+  }
+}
+
+.wrapper {
+  width: 400px;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+h4 {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #fff;
+}
+.input-field {
+  position: relative;
+  border-bottom: 2px solid #ff0000;
+  margin: 150px 15;
+}
+.input-field label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 16px;
+  pointer-events: none;
+  transition: 0.15s ease;
+}
+.input-field input {
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #fff;
+}
+.input-field input:focus~label,
+.input-field input:valid~label {
+  font-size: 0.8rem;
+  top: 10px;
+  transform: translateY(120%);
+}
+.forget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 25px 0 35px 0;
+  color: #fff;
+}
+#remember {
+  accent-color: #fff;
+}
+.forget label {
+  display: flex;
+  align-items: center;
+}
+.forget label p {
+  margin-left: 8px;
+}
+.wrapper a {
+  color: #efefef;
+  text-decoration: none;
+}
+.wrapper a:hover {
+  text-decoration: underline;
+}
+.event-option {
+  margin-bottom: 15px;   /* space between buttons */
+}
+
+button {
+  background: #fff;
+  color: #000;
+  font-weight: 600;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  transition: 0.3s ease;
+}
+button:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.15);
+}
+.register {
+  text-align: center;
+  margin-top: 30px;
+  color: #fff;
+}
+/* remove default button style */
+/* === Watermark Button (Bottom Fixed) === */
+.watermark-wrapper {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  opacity: 0.8;
+  pointer-events: auto;
+}
+
+/* Button base */
+.watermark-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  --border-right: 7px;
+  --text-stroke-color: rgb(255, 255, 255);
+  --animation-color: #fea900;
+  --fs-size: 1.3em;
+
+  font-size: var(--fs-size);
+  font-family: Arial, sans-serif;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+
+  position: relative;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-stroke-color);
+}
+
+/* Animated hover text */
+.watermark-btn .hover-text {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  overflow: hidden;
+  color: var(--animation-color);
+  border-right: var(--border-right) solid var(--animation-color);
+  transition: width 1.4s ease;
+  -webkit-text-stroke: 1px var(--animation-color);
+}
+
+/* 🚀 REAL animation */
+.watermark-btn:hover .hover-text {
+  width: 100%;
+  filter: drop-shadow(0 0 5px var(--animation-color));
+}

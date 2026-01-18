@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAGNUS FEST</title>
+  <link rel="stylesheet" href="form.css">
+
+  <style>
+    .event-btn {
+      width: 100%;
+      padding: 16px;
+      margin-bottom: 15px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+
+    .event-btn:hover {
+      background: rgba(0, 255, 180, 0.35);
+      border-color: #00ffc8;
+      transform: scale(1.02);
+    }
+
+    .back-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      background: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <form onsubmit="return false;">
+<!-- Logo -->
+<img src="images/logo.png" alt="Magnus Fest Logo" class="fest-logo">
+
+      <h2>Welcome to <br> MAGNUS FEST </h2>
+      <h4>SELECT YOUR EVENT</h4>
+
+      <!-- Event Buttons -->
+ <button
+  type="button"
+  class="event-btn"
+  onclick="window.location.href='e1.html'">
+  IDEASPHERE
+</button>
+
+<button type="button" class="event-btn" onclick="window.location.href='e2.html'">
+   AI ROBOTICS INNOVATION EXPO</button>
+
+<button type="button" class="event-btn" onclick="window.location.href='e3.html'">
+  AI ROBOTICS EXPO</button>
+
+<button type="button" class="event-btn" onclick="window.location.href='e4.html'"> IT TREASURE HUNT</button>
+
+      <!-- Back Button -->
+      <button type="button" class="back-btn" onclick="history.back()">
+        ← Back
+      </button>
+
+    </form>
+  </div>
+
+  <script>
+    function goTo(page) {
+      window.location.href = page;
+    }
+  </script>
+<!-- Watermark Button -->
+<div class="watermark-wrapper">
+  <button class="watermark-btn" data-text="uiverse">
+    <span class="actual-text">&nbsp;ABHII.FX&nbsp;</span>
+    <span aria-hidden="true" class="hover-text">&nbsp;ABHII.FX&nbsp;</span>
+  </button>
+</div>
+</body>
+</html>

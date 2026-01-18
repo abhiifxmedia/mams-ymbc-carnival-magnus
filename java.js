@@ -1,0 +1,216 @@
+// JavaScript Document
+
+// ========================
+// Mobile menu functionality
+// ========================
+const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
+
+if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', () => {
+        mobileMenuToggle.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+    });
+}
+
+// Close mobile menu when clicking on links
+mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenuToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (
+        mobileMenuToggle &&
+        mobileMenu &&
+        !mobileMenuToggle.contains(e.target) &&
+        !mobileMenu.contains(e.target)
+    ) {
+        mobileMenuToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+});
+
+// ========================
+// Navbar scroll effect
+// ========================
+window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return;
+
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+// ========================
+// Intersection Observer for animations
+// ========================
+const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -80px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+        }
+    });
+}, observerOptions);
+
+// Staggered animation for portfolio items
+const portfolioObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const items = entry.target.querySelectorAll('.portfolio-item');
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('animate');
+                }, index * 150);
+            });
+        }
+    });
+}, { threshold: 0.1 });
+
+// ========================
+// Google Sheets form submission
+// ========================
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwPzmNmK4AgNPwStNLwBDv-jfZwZVqzkU07BcPblDADdpwooroID-bsTbZTwf1Qymin/exec';
+// (This is the same URL you already had.) 
+
+// ========================
+// DOMContentLoaded
+// ========================
+document.addEventListener('DOMContentLoaded', () => {
+    // Animate elements on scroll
+    const animatedElements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+    animatedElements.forEach(el => observer.observe(el));
+
+    const portfolioSection = document.querySelector('.portfolio-grid');
+    if (portfolioSection) {
+        portfolioObserver.observe(portfolioSection);
+    }
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const offsetTop = target.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Form submission to Google Sheets
+    const form = document.getElementById('registrationForm');
+    const submitBtn = document.querySelector('.submit-btn');
+
+    if (!form || !submitBtn) {
+        console.error('Registration form or submit button not found');
+    } else {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // stop page refresh
+
+            const originalText = submitBtn.textContent;
+
+            // Loading state
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            submitBtn.style.background = 'linear-gradient(135deg, #94a3b8, #64748b)';
+
+            const formData = new FormData(form);
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(() => {
+                    // Success state
+                    submitBtn.textContent = 'Registered! ✓';
+                    submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                    submitBtn.style.transform = 'scale(1.05)';
+
+                    setTimeout(() => {
+                        submitBtn.style.transform = 'scale(1)';
+                    }, 200);
+
+                    form.reset();
+                })
+                .catch(err => {
+                    console.error('Error!', err);
+                    alert('Submission failed. Please try again.');
+                })
+                .finally(() => {
+                    // Always re-enable the button
+                    setTimeout(() => {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = '';
+                    }, 2000);
+                });
+        });
+    }
+
+    // Hover effects for skill tags
+    document.querySelectorAll('.skill-tag').forEach(tag => {
+        tag.addEventListener('mouseenter', () => {
+            tag.style.transform = 'translateY(-2px) scale(1.05)';
+        });
+
+        tag.addEventListener('mouseleave', () => {
+            tag.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+});
+
+// ========================
+// Parallax effect for hero background
+// ========================
+let ticking = false;
+
+function updateParallax() {
+    const scrolled = window.pageYOffset;
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        const rate = scrolled * -0.3;
+        hero.style.transform = `translateY(${rate}px)`;
+    }
+    ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+    }
+});
+
+// ========================
+// Keyboard navigation (Esc to close menu)
+// ========================
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
+        mobileMenuToggle.classList.remove('active');
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+});
